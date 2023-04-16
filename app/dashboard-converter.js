@@ -7,6 +7,7 @@ const DASHBOARD = {
   widgets: (v) => convertWidgets(v),
   id: (_) => "",
   is_read_only: (v) => assignmentString("is_read_only", v),
+  show_title: (v) => assignmentString("show_title", v),
   notify_list: (v) => assignmentString("notify_list", v),
   reflow_type: (v) => assignmentString("reflow_type", v),
   template_variables: (v) => blockList(v, "template_variable", assignmentString),
@@ -36,6 +37,7 @@ const WIDGET_DEFINTION = {
   alert_id: (v) => assignmentString("alert_id", v),
   precision: (v) => assignmentString("precision", v),
   text_align: (v) => assignmentString("text_align", v),
+  show_title: (v) => assignmentString("show_title", v),
   unit: (v) => assignmentString("unit", v),
   custom_links: (v) => blockList(v, "custom_link", assignmentString),
   requests: (v) => convertRequests(v),
@@ -72,10 +74,8 @@ const WIDGET_DEFINTION = {
   message_display: (v) => assignmentString("message_display", v),
   show_date_column: (v) => assignmentString("show_date_column", v),
   show_message_column: (v) => assignmentString("show_message_column", v),
-  show_message_column: (v) => assignmentString("show_message_column", v),
   sort: (v) => convertSort(v),
   color_preference: (v) => assignmentString("color_preference", v),
-  display_format: (v) => assignmentString("display_format", v),
   hide_zero_counts: (v) => assignmentString("hide_zero_counts", v),
   show_last_triggered: (v) => assignmentString("show_last_triggered", v),
   summary_type: (v) => assignmentString("summary_type", v),
@@ -96,7 +96,6 @@ const WIDGET_DEFINTION = {
   filters: (v) => assignmentString("filters", v),
   service: (v) => assignmentString("service", v),
   event: (v) => block("event", v, assignmentString),
-  legend_size: (v) => assignmentString("legend_size", v),
   markers: (v) => blockList(v, "marker", assignmentString),
   right_yaxis: (v) => block("right_yaxis", v, assignmentString),
   env: (v) => assignmentString("env", v),
@@ -151,16 +150,20 @@ const REQUEST = {
   formulas: (list) =>
     blockList(list, "formula", (k, v) => convertFromDefinition(FORMULA, k, v)),
   queries: (list) => blockList(list, "query", (k, v) => convertFromDefinition(QUERY, k, v)),
+  request_type: (v) => assignmentString("request_type", v),
+  query: (v) => assignmentString("query", v),
 };
 
 const FORMULA = {
   formula: (v) => assignmentString("formula_expression", v),
+  alias: (v) => assignmentString("alias", v),
 };
 
 const QUERY = {
   name: (v) => assignmentString("name", v),
   data_source: (v) => assignmentString("data_source", v),
   query: (v) => assignmentString("query", v),
+  aggregator: (v) => assignmentString(("aggregator"), v),
 };
 
 const LOG_QUERY = {
