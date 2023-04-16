@@ -1,0 +1,158 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <title>Datadog-to-terraform Converter</title>
+  </head>
+  <body>
+    <style>
+      html {
+        background-color: #f5ecfd;
+      }
+      body {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+      }
+      .content {
+        margin: 8px 16px 3px;
+        width: 90%;
+        height: 900px;
+        max-height: 100vh;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 80% 20%;
+      }
+      .inputWrapper, .outputWrapper {
+        width: 90%;
+        height: 100%;
+        padding: 30px;
+      }
+      .inputWrapper {
+        grid-column: 1 ;
+        grid-row: 1;
+      }
+      .outputWrapper {
+        grid-column: 2 ;
+        grid-row: 1;
+      }
+      .buttonWrapper {
+        grid-column: 1 / 3;
+        grid-row: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+      }
+      textarea {
+        width: 100%;
+        min-height: 30px;
+        border-radius: 4px;
+        border: 1px solid grey;
+        padding: 4px;
+        margin-bottom: 16px;
+        height: 100%;
+      }
+      button {
+        width: 500px;
+        padding: 10px;
+        background-color: #9011fe;
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: #a139fa;
+      }
+      #statusMessage {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        opacity: 0;
+      }
+    </style>
+
+    <div class="content">
+      <div class="inputWrapper">
+        <textarea
+          id="datadogJson"
+          placeholder='{&#10;  "name": "Some lovely monitor or dashboard",&#10;  "type": "metric alert",&#10;  "query": ...&#10;}'
+        >
+          {
+            "widgets": [
+              {
+                "definition": {
+                  "title": "Demo widget",
+                  "title_size": "16",
+                  "title_align": "left",
+                  "type": "query_value",
+                  "requests": [
+                    {
+                      "response_format": "scalar",
+                      "queries": [
+                        {
+                          "name": "query1",
+                          "data_source": "metrics",
+                          "query": "sum:demo_metric{$environment}.as_count()",
+                          "aggregator": "sum"
+                        }
+                      ],
+                      "formulas": [
+                        {
+                          "formula": "query1"
+                        }
+                      ]
+                    }
+                  ],
+                  "autoscale": true,
+                  "precision": 2,
+                  "timeseries_background": {
+                    "yaxis": {},
+                    "type": "bars"
+                  }
+                },
+                "layout": {
+                  "height": 2,
+                  "width": 2,
+                  "x": 0,
+                  "y": 0
+                }
+              }
+            ],
+            "template_variables": [
+              {
+                "defaults": [
+                  "live"
+                ],
+                "values": [
+                  "live"
+                ],
+                "name": "environment",
+                "prefix": "environment"
+              }
+            ],
+            "layout_type": "ordered"
+          }
+
+        </textarea>
+      </div>
+
+      <div class="outputWrapper">
+        <textarea
+                id="convertedCode"
+                placeholder='Converted code will appear here'
+        ></textarea>
+
+      </div>
+
+      <div class="buttonWrapper">
+        <p id="statusMessage">status</p>
+        <button id="convertButton">Convert & copy result</button>
+      </div>
+    </div>
+
+    <script type="module" src="converter.js"></script>
+  </body>
+</html>
