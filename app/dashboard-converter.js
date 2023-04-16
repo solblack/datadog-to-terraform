@@ -117,6 +117,9 @@ const WIDGET_DEFINTION = {
   vertical_align: (_) => "", // 2.23.0 not described in docs, occurs in widget.note_definition json
   has_padding: (_) => "", // 2.23.0 not described in docs, occurs in widget.note_definition json
   logset: (_) => "", // 2.23.0 deprecated, see docs for widget.log_stream_definition
+  timeseries_background: (v) => block("timeseries_background", v, (k1, v1) =>
+      convertFromDefinition(TIMESERIES_BACKGROUND, k1, v1)
+  ),
 };
 
 const REQUEST = {
@@ -182,6 +185,11 @@ const GROUP_BY = {
   sort: (v) => block("sort_query", v, assignmentString),
   sort_query: (v) => block("sort_query", v, assignmentString),
 };
+
+const TIMESERIES_BACKGROUND = {
+  type: (v) => assignmentString("type", v),
+  yaxis: (v) => block("yaxis", v, assignmentString),
+}
 
 function convertSort(v) {
   return typeof v === "string"
