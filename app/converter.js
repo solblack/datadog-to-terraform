@@ -31,7 +31,7 @@ function addDomElementsForResult(terraformAlarmCode) {
   resultTextArea.textContent = terraformAlarmCode;
 
   var convertedCodeTextarea = document.getElementById("convertedCode");
-  convertedCodeTextarea.innerText = terraformAlarmCode;
+  convertedCodeTextarea.value = terraformAlarmCode;
 }
 
 function copyResultToClipboard() {
